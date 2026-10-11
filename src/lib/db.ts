@@ -123,6 +123,12 @@ export function normalizeClubEvent(
   }
   if (raw.registerUrl) event.registerUrl = String(raw.registerUrl).trim();
   if (raw.googleFormUrl) event.googleFormUrl = String(raw.googleFormUrl).trim();
+  if (raw.link1Title && String(raw.link1Title).trim())
+    event.link1Title = String(raw.link1Title).trim();
+  if (raw.link1Url && String(raw.link1Url).trim()) event.link1Url = String(raw.link1Url).trim();
+  if (raw.link2Title && String(raw.link2Title).trim())
+    event.link2Title = String(raw.link2Title).trim();
+  if (raw.link2Url && String(raw.link2Url).trim()) event.link2Url = String(raw.link2Url).trim();
 
   return event;
 }
@@ -602,6 +608,11 @@ export const createRegistration = async (data: Record<string, unknown>) => {
   });
   const docRef = await addDoc(collection(db, REGISTRATIONS_COLLECTION), sanitized);
   return docRef.id;
+};
+
+export const deleteRegistration = async (id: string) => {
+  await deleteDoc(doc(db, REGISTRATIONS_COLLECTION, id));
+  return true;
 };
 
 // ═══════════════════════════════════════════════════════════════════════

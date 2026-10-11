@@ -152,39 +152,79 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 ))}
               </div>
 
-              {event.status === "upcoming" ? (
-                event.googleFormUrl ? (
-                  <button
-                    onClick={() => setMode("register")}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
-                  >
-                    Register Now <ArrowRight className="size-4" />
-                  </button>
-                ) : event.registerUrl ? (
+              {/* Action Buttons Group */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                {/* Secondary Custom Link 1 (e.g. WhatsApp, Rulebook) */}
+                {event.link1Url && event.link1Url.trim() !== "" && (
                   <a
-                    href={event.registerUrl}
+                    href={
+                      event.link1Url.trim().startsWith("http://") ||
+                      event.link1Url.trim().startsWith("https://")
+                        ? event.link1Url.trim()
+                        : `https://${event.link1Url.trim()}`
+                    }
                     target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-surface-strong hover:bg-surface border border-border/80 px-4 py-2.5 text-xs sm:text-sm font-semibold text-foreground hover:border-primary/50 transition-all hover:scale-105 shadow-sm"
                   >
-                    Register Now <ExternalLink className="size-4" />
+                    <ExternalLink className="size-3.5 text-primary" />
+                    <span>{event.link1Title?.trim() || "Resource Link"}</span>
                   </a>
+                )}
+
+                {/* Secondary Custom Link 2 (e.g. Brochure, Discord) */}
+                {event.link2Url && event.link2Url.trim() !== "" && (
+                  <a
+                    href={
+                      event.link2Url.trim().startsWith("http://") ||
+                      event.link2Url.trim().startsWith("https://")
+                        ? event.link2Url.trim()
+                        : `https://${event.link2Url.trim()}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-surface-strong hover:bg-surface border border-border/80 px-4 py-2.5 text-xs sm:text-sm font-semibold text-foreground hover:border-primary/50 transition-all hover:scale-105 shadow-sm"
+                  >
+                    <ExternalLink className="size-3.5 text-primary" />
+                    <span>{event.link2Title?.trim() || "Brochure / Guidelines"}</span>
+                  </a>
+                )}
+
+                {/* Primary Action Button (Register / Status) */}
+                {event.status === "upcoming" ? (
+                  event.googleFormUrl ? (
+                    <button
+                      onClick={() => setMode("register")}
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 shadow-lg shadow-primary/20"
+                    >
+                      Register Now <ArrowRight className="size-4" />
+                    </button>
+                  ) : event.registerUrl ? (
+                    <a
+                      href={event.registerUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 shadow-lg shadow-primary/20"
+                    >
+                      Register Now <ExternalLink className="size-4" />
+                    </a>
+                  ) : (
+                    <button
+                      disabled
+                      className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed"
+                    >
+                      Opening Soon
+                    </button>
+                  )
                 ) : (
                   <button
                     disabled
                     className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed"
                   >
-                    Opening Soon
+                    Registration Closed
                   </button>
-                )
-              ) : (
-                <button
-                  disabled
-                  className="rounded-full bg-surface border border-border px-6 py-2.5 text-sm font-semibold text-muted-foreground cursor-not-allowed"
-                >
-                  Registration Closed
-                </button>
-              )}
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -202,13 +242,46 @@ export function EventModal({ event, onClose }: EventModalProps) {
               : `${formUrl}?embedded=true`;
             return (
               <div className="animate-in slide-in-from-right-4 fade-in duration-300">
-                <div className="flex items-center mb-6">
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
                   <button
                     onClick={() => setMode("details")}
-                    className="inline-flex items-center text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-surface-strong px-3 py-1.5 rounded-full"
+                    className="inline-flex items-center text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors bg-surface-strong px-3.5 py-1.5 rounded-full border border-border/60"
                   >
                     <ArrowLeft className="mr-2 size-3.5" /> Back to details
                   </button>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    {event.link1Url && event.link1Url.trim() !== "" && (
+                      <a
+                        href={
+                          event.link1Url.trim().startsWith("http")
+                            ? event.link1Url.trim()
+                            : `https://${event.link1Url.trim()}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors bg-surface-strong px-3 py-1.5 rounded-full border border-border/70"
+                      >
+                        <ExternalLink className="size-3 text-primary" />
+                        <span>{event.link1Title?.trim() || "Resource Link"}</span>
+                      </a>
+                    )}
+                    {event.link2Url && event.link2Url.trim() !== "" && (
+                      <a
+                        href={
+                          event.link2Url.trim().startsWith("http")
+                            ? event.link2Url.trim()
+                            : `https://${event.link2Url.trim()}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors bg-surface-strong px-3 py-1.5 rounded-full border border-border/70"
+                      >
+                        <ExternalLink className="size-3 text-primary" />
+                        <span>{event.link2Title?.trim() || "Brochure"}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
                 <div
                   className="w-full rounded-xl overflow-hidden bg-white shadow-inner relative"

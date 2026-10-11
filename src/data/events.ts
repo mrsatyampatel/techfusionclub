@@ -18,6 +18,10 @@ export type ClubEvent = {
   winners?: { position: string; name: string; project: string }[];
   registerUrl?: string;
   googleFormUrl?: string;
+  link1Title?: string;
+  link1Url?: string;
+  link2Title?: string;
+  link2Url?: string;
   status: "draft" | "upcoming" | "past";
 };
 
