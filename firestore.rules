@@ -35,12 +35,6 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Announcements collection
-    match /announcements/{announcementId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
     // Registrations collection — strict schema and length validation for public create
     match /registrations/{registrationId} {
       allow create: if request.resource.data.keys().hasAll(['name', 'email', 'eventSlug', 'submittedAt']) &&

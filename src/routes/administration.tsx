@@ -40,10 +40,6 @@ import {
   getGalleryPhotos,
   createGalleryPhoto,
   deleteGalleryPhoto,
-  getAnnouncements,
-  createAnnouncement,
-  updateAnnouncement,
-  deleteAnnouncement,
   getRegistrations,
   getTrashItems,
   restoreTrashItem,
@@ -57,7 +53,6 @@ import type { Member, MemberTier } from "@/data/members";
 import { tierMeta } from "@/data/members";
 import type { Alumnus } from "@/data/alumni";
 import type { GalleryPhoto } from "@/data/gallery";
-import type { Announcement } from "@/data/announcements";
 import { toast } from "sonner";
 import { GlowCard } from "@/components/site/GlowCard";
 
@@ -187,7 +182,6 @@ function AdminShell() {
     { name: "Members", icon: Users },
     { name: "Alumni", icon: GraduationCap },
     { name: "Gallery", icon: ImageIcon },
-    { name: "Announcements", icon: Megaphone },
     { name: "Trash", icon: Trash2 },
   ];
 
@@ -269,7 +263,6 @@ function AdminShell() {
             {activeTab === "Members" && <MembersAdmin />}
             {activeTab === "Alumni" && <AlumniAdmin />}
             {activeTab === "Gallery" && <GalleryAdmin />}
-            {activeTab === "Announcements" && <AnnouncementsAdmin />}
             {activeTab === "Trash" && <TrashAdmin />}
           </div>
         </div>
@@ -1597,270 +1590,6 @@ function GalleryForm({
           className="flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 transition-all"
         >
           <Save className="size-4" /> Upload Photo
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-//  ANNOUNCEMENTS ADMIN
-// ═══════════════════════════════════════════════════════════════════════
-
-function AnnouncementsAdmin() {
-  const [announcements, setAnnouncements] = useState<(Announcement & { id?: string })[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingAnnouncement, setEditingAnnouncement] = useState<
-    (Announcement & { id?: string }) | null
-  >(null);
-
-  const fetchAnnouncements = async () => {
-    setLoading(true);
-    const data = await getAnnouncements();
-    setAnnouncements(data);
-    setLoading(false);
-  };
-  useEffect(() => {
-    fetchAnnouncements();
-  }, []);
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Delete this announcement?")) return;
-    try {
-      await deleteAnnouncement(id);
-      toast.success("Moved to trash");
-      fetchAnnouncements();
-    } catch {
-      toast.error("Failed to delete.");
-    }
-  };
-
-  const handleSave = async (data: Partial<Announcement>) => {
-    try {
-      if (editingAnnouncement?.id) {
-        await updateAnnouncement(editingAnnouncement.id, data);
-        toast.success("Announcement updated");
-      } else {
-        await createAnnouncement(data);
-        toast.success("Announcement posted");
-      }
-      setShowForm(false);
-      setEditingAnnouncement(null);
-      fetchAnnouncements();
-    } catch {
-      toast.error("Failed to save.");
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-muted-foreground">
-          {announcements.length} announcements
-        </p>
-        <button
-          onClick={() => {
-            setEditingAnnouncement(null);
-            setShowForm(true);
-          }}
-          className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 transition-all"
-        >
-          <Megaphone className="size-4" /> New Announcement
-        </button>
-      </div>
-
-      {showForm && (
-        <AnnouncementForm
-          announcement={editingAnnouncement}
-          onSave={handleSave}
-          onCancel={() => {
-            setShowForm(false);
-            setEditingAnnouncement(null);
-          }}
-        />
-      )}
-
-      {loading ? (
-        <LoadingState />
-      ) : announcements.length > 0 ? (
-        <div className="space-y-4">
-          {announcements.map((a) => (
-            <div
-              key={a.id || a.title}
-              className="bg-surface rounded-2xl border border-border p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:border-primary/30 transition-colors group"
-            >
-              <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2">
-                  <h3 className="font-display font-bold text-lg">{a.title}</h3>
-                  <span
-                    className={`rounded-full px-3 py-1 text-[10px] uppercase font-mono tracking-widest border ${a.published ? "text-green-500 border-green-500/30 bg-green-500/10" : "text-yellow-500 border-yellow-500/30 bg-yellow-500/10"}`}
-                  >
-                    {a.published ? "Published" : "Draft"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-3">
-                  <Calendar className="size-3" /> {a.date}
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">{a.summary}</p>
-              </div>
-              <div className="flex gap-2 shrink-0 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={() => {
-                    setEditingAnnouncement(a);
-                    setShowForm(true);
-                  }}
-                  className="p-3 rounded-xl bg-surface hover:bg-surface-strong hover:text-primary transition-colors border border-border"
-                >
-                  <Edit3 className="size-4" />
-                </button>
-                {a.id && (
-                  <button
-                    onClick={() => handleDelete(a.id!)}
-                    className="p-3 rounded-xl bg-surface hover:bg-destructive/10 hover:text-destructive transition-colors border border-border"
-                  >
-                    <Trash2 className="size-4" />
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <EmptyState message="No announcements yet. Create one to inform the club." />
-      )}
-    </div>
-  );
-}
-
-function AnnouncementForm({
-  announcement,
-  onSave,
-  onCancel,
-}: {
-  announcement: (Announcement & { id?: string }) | null;
-  onSave: (data: Partial<Announcement>) => void;
-  onCancel: () => void;
-}) {
-  const [form, setForm] = useState<Partial<Announcement>>({
-    title: (announcement?.title || "") as string,
-    date: (announcement?.date || new Date().toISOString().split("T")[0]) as string,
-    summary: announcement?.summary || "",
-    content: announcement?.content || "",
-    image: announcement?.image || "",
-    link: announcement?.link || "",
-    published: announcement?.published ?? false,
-  });
-
-  return (
-    <div className="bg-surface rounded-xl border border-border p-6 mb-8 animate-in fade-in slide-in-from-top-4">
-      <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
-        <h3 className="font-display font-bold text-xl">
-          {announcement ? "Edit Announcement" : "New Announcement"}
-        </h3>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="p-2 rounded-lg hover:bg-background text-muted-foreground transition-colors"
-        >
-          <X className="size-5" />
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Title *
-          </label>
-          <input
-            value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
-            className="w-full rounded-xl border border-border/50 bg-surface/50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/50 focus:border-transparent outline-none transition-all"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Date *
-          </label>
-          <input
-            type="date"
-            value={form.date}
-            onChange={(e) => setForm({ ...form, date: e.target.value })}
-            className="w-full rounded-xl border border-border/50 bg-surface/50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/50 focus:border-transparent outline-none transition-all"
-          />
-        </div>
-        <InputField
-          label="Link (optional)"
-          value={form.link}
-          onChange={(v) => setForm({ ...form, link: v })}
-        />
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Summary *
-          </label>
-          <textarea
-            value={form.summary}
-            onChange={(e) => setForm({ ...form, summary: e.target.value })}
-            rows={2}
-            className="w-full rounded-xl border border-border/50 bg-surface/50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/50 focus:border-transparent outline-none transition-all resize-y"
-          />
-        </div>
-        <div className="space-y-2 md:col-span-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Full Content (Supports Markdown/Text)
-          </label>
-          <textarea
-            value={form.content}
-            onChange={(e) => setForm({ ...form, content: e.target.value })}
-            rows={5}
-            className="w-full rounded-xl border border-border/50 bg-surface/50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/50 focus:border-transparent outline-none transition-all resize-y"
-          />
-        </div>
-        <div className="md:col-span-2">
-          <InputField
-            label="Image URL (optional)"
-            value={form.image}
-            onChange={(v) => setForm({ ...form, image: v })}
-          />
-        </div>
-        <div className="flex items-center md:col-span-2 pt-2">
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              className="sr-only peer"
-              checked={form.published}
-              onChange={(e) => setForm({ ...form, published: e.target.checked })}
-            />
-            <div className="w-11 h-6 bg-surface-strong peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-            <span className="ml-3 text-sm font-medium text-foreground">Publish immediately</span>
-          </label>
-        </div>
-      </div>
-      <div className="mt-8 flex justify-end gap-4 border-t border-border/50 pt-6">
-        <button
-          onClick={onCancel}
-          className="rounded-xl px-5 py-2.5 text-sm font-medium hover:bg-surface transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            if (!form.title?.trim() || !form.date || !form.summary?.trim()) {
-              toast.error("Title, Date, and Summary are required");
-              return;
-            }
-            onSave({
-              ...form,
-              title: form.title.trim(),
-              summary: form.summary.trim(),
-              content: form.content?.trim() || "",
-              image: form.image?.trim() || "",
-              link: form.link?.trim() || "",
-              published: Boolean(form.published),
-            });
-          }}
-          className="flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 transition-all"
-        >
-          <Save className="size-4" /> {announcement ? "Update" : "Post Announcement"}
         </button>
       </div>
     </div>

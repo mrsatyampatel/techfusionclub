@@ -19,15 +19,12 @@ import type { Alumnus } from "@/data/alumni";
 import { alumniList as staticAlumni } from "@/data/alumni";
 import type { GalleryPhoto } from "@/data/gallery";
 import { galleryPhotos as staticGallery } from "@/data/gallery";
-import type { Announcement } from "@/data/announcements";
-import { announcements as staticAnnouncements } from "@/data/announcements";
 
 // ─── Collection Names ────────────────────────────────────────────────
 const EVENTS_COLLECTION = "events";
 const MEMBERS_COLLECTION = "members";
 const ALUMNI_COLLECTION = "alumni";
 const GALLERY_COLLECTION = "gallery";
-const ANNOUNCEMENTS_COLLECTION = "announcements";
 const REGISTRATIONS_COLLECTION = "registrations";
 const TRASH_COLLECTION = "trash";
 const SETTINGS_COLLECTION = "settings";
@@ -38,7 +35,6 @@ const ALLOWED_RESTORE_COLLECTIONS = new Set([
   MEMBERS_COLLECTION,
   ALUMNI_COLLECTION,
   GALLERY_COLLECTION,
-  ANNOUNCEMENTS_COLLECTION,
 ]);
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -201,25 +197,6 @@ export function normalizeGalleryPhoto(
     eventSlug: String(raw.eventSlug || "").trim() || "event",
     year: isNaN(parsedYear) ? new Date().getFullYear() : parsedYear,
   };
-}
-
-/**
- * Normalizes an Announcement document from Firestore.
- */
-export function normalizeAnnouncement(
-  raw: Partial<Announcement> & { id?: string; [key: string]: unknown },
-): Announcement & { id: string } {
-  const item: Announcement & { id: string } = {
-    id: String(raw.id || ""),
-    title: String(raw.title || "").trim() || "Announcement",
-    date: String(raw.date || "").trim() || new Date().toISOString().slice(0, 10),
-    summary: String(raw.summary || "").trim(),
-    published: Boolean(raw.published),
-  };
-  if (raw.content) item.content = String(raw.content).trim();
-  if (raw.image) item.image = String(raw.image).trim();
-  if (raw.link) item.link = String(raw.link).trim();
-  return item;
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -599,51 +576,6 @@ export const deleteGalleryPhoto = async (id: string) => {
   await moveToTrash(GALLERY_COLLECTION, id);
   await deleteDoc(doc(db, GALLERY_COLLECTION, id));
   clearCache("gallery");
-  return true;
-};
-
-// ═══════════════════════════════════════════════════════════════════════
-//  ANNOUNCEMENTS
-// ═══════════════════════════════════════════════════════════════════════
-
-export const getAnnouncements = async (): Promise<(Announcement & { id: string })[]> => {
-  const cacheKey = "announcements";
-  const cached = getCached<(Announcement & { id: string })[]>(cacheKey);
-  if (cached) return cached;
-
-  try {
-    const snapshot = await getDocs(collection(db, ANNOUNCEMENTS_COLLECTION));
-    const result = snapshot.docs.map((d) =>
-      normalizeAnnouncement({ id: d.id, ...(d.data() as Partial<Announcement>) }),
-    );
-    setCache(cacheKey, result);
-    return result;
-  } catch (error) {
-    console.warn("Error fetching announcements from Firestore, using fallback:", error);
-    const stale = getCached<(Announcement & { id: string })[]>(cacheKey, true);
-    if (stale && stale.length > 0) return stale;
-    return staticAnnouncements.map((a) => normalizeAnnouncement(a));
-  }
-};
-
-export const createAnnouncement = async (data: Partial<Announcement>) => {
-  const sanitized = sanitizeFirestoreData(data);
-  const docRef = await addDoc(collection(db, ANNOUNCEMENTS_COLLECTION), sanitized);
-  clearCache("announcements");
-  return docRef.id;
-};
-
-export const updateAnnouncement = async (id: string, data: Partial<Announcement>) => {
-  const sanitized = sanitizeFirestoreData(data);
-  await updateDoc(doc(db, ANNOUNCEMENTS_COLLECTION, id), sanitized as Record<string, unknown>);
-  clearCache("announcements");
-  return true;
-};
-
-export const deleteAnnouncement = async (id: string) => {
-  await moveToTrash(ANNOUNCEMENTS_COLLECTION, id);
-  await deleteDoc(doc(db, ANNOUNCEMENTS_COLLECTION, id));
-  clearCache("announcements");
   return true;
 };
 

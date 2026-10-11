@@ -13,7 +13,6 @@ const links: NavLink[] = [
   { to: "/members", label: "Members" },
   { to: "/alumni", label: "Alumni" },
   { to: "/gallery", label: "Gallery" },
-  { to: "/announcements", label: "Announcements" },
   { to: "/contact", label: "Contact" },
 ];
 

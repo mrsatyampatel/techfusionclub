@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdministrationRouteImport } from './routes/administration'
 import { Route as AlumniRouteImport } from './routes/alumni'
-import { Route as AnnouncementsRouteImport } from './routes/announcements'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as MembersRouteImport } from './routes/members'
@@ -37,11 +36,6 @@ const AdministrationRoute = AdministrationRouteImport.update({
 const AlumniRoute = AlumniRouteImport.update({
   id: '/alumni',
   path: '/alumni',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AnnouncementsRoute = AnnouncementsRouteImport.update({
-  id: '/announcements',
-  path: '/announcements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -70,7 +64,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
-  '/announcements': typeof AnnouncementsRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -81,7 +74,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
-  '/announcements': typeof AnnouncementsRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -93,7 +85,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/administration': typeof AdministrationRoute
   '/alumni': typeof AlumniRoute
-  '/announcements': typeof AnnouncementsRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -106,7 +97,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/administration'
     | '/alumni'
-    | '/announcements'
     | '/contact'
     | '/gallery'
     | '/members'
@@ -117,7 +107,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/administration'
     | '/alumni'
-    | '/announcements'
     | '/contact'
     | '/gallery'
     | '/members'
@@ -128,7 +117,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/administration'
     | '/alumni'
-    | '/announcements'
     | '/contact'
     | '/gallery'
     | '/members'
@@ -140,7 +128,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdministrationRoute: typeof AdministrationRoute
   AlumniRoute: typeof AlumniRoute
-  AnnouncementsRoute: typeof AnnouncementsRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
@@ -175,13 +162,6 @@ declare module '@tanstack/react-router' {
       path: '/alumni'
       fullPath: '/alumni'
       preLoaderRoute: typeof AlumniRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/announcements': {
-      id: '/announcements'
-      path: '/announcements'
-      fullPath: '/announcements'
-      preLoaderRoute: typeof AnnouncementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -220,7 +200,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdministrationRoute: AdministrationRoute,
   AlumniRoute: AlumniRoute,
-  AnnouncementsRoute: AnnouncementsRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
