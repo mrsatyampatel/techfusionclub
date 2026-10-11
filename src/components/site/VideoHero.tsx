@@ -42,7 +42,7 @@ export function VideoHero({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden">
+    <section className="relative min-h-[90dvh] sm:min-h-[100dvh] overflow-hidden">
       {/* ── Video Background ── */}
       <video
         autoPlay
@@ -85,7 +85,7 @@ export function VideoHero({ children }: { children: React.ReactNode }) {
       <div className="circuit-lines pointer-events-none absolute inset-0 opacity-30" />
 
       {/* ── Content grid: Left text + Right logo ── */}
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl items-center px-5 sm:px-8">
+      <div className="relative z-10 mx-auto flex min-h-[85dvh] sm:min-h-[82dvh] lg:min-h-[88dvh] max-w-7xl items-center px-5 sm:px-8 pt-20 pb-10 sm:pt-28 sm:pb-10">
         <div className="grid w-full gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 items-center">
           {/* LEFT — Tagline + CTAs */}
           <div className="order-2 lg:order-1">{children}</div>

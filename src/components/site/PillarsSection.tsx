@@ -1,5 +1,5 @@
 import { GlowCard } from "@/components/site/GlowCard";
-import { Users, Layers, Award, Terminal, Code2, Cpu, ShieldCheck } from "lucide-react";
+import { FileText, Code2, Users, Palette } from "lucide-react";
 
 interface Pillar {
   number: string;
@@ -13,39 +13,39 @@ interface Pillar {
 const pillars: Pillar[] = [
   {
     number: "01",
-    title: "Weekly Hands-on Build Nights",
-    subtitle: "Shipping Code Over Slideware",
+    title: "Documentation",
+    subtitle: "Records, Proposals & Governance",
     description:
-      "Every Thursday evening, members gather in the computer labs to write code, debug real-world applications, and collaborate on cross-domain projects.",
-    tags: ["Build Nights", "Peer Coding", "Live Demos"],
-    icon: <Code2 className="size-6 text-primary-glow" />,
+      "Handles all official paperwork, event proposals, administrative approvals, event reports, and structured communications to keep the club accountable and organized.",
+    tags: ["Event Reports", "Proposals", "Official Records", "Formal Letters"],
+    icon: <FileText className="size-6 text-primary-glow" />,
   },
   {
     number: "02",
-    title: "1-on-1 Senior Mentorship Ladder",
-    subtitle: "From Beginner to Domain Lead",
+    title: "Technical",
+    subtitle: "Engineering, Development & Build",
     description:
-      "Every junior is matched with a senior mentor inside their domain for code reviews, project guidance, and technical career advice.",
-    tags: ["Code Review", "Career Prep", "1-on-1 Help"],
-    icon: <Users className="size-6 text-accent" />,
+      "The core engineering wing powering full-stack web platforms, hackathon prep, open-source projects, and hands-on developer workshops across engineering domains.",
+    tags: ["Web & App Dev", "Hackathons", "Hands-on Labs", "Open Source"],
+    icon: <Code2 className="size-6 text-cyan-400" />,
   },
   {
     number: "03",
-    title: "Production Shipping & Open Source",
-    subtitle: "Real Repositories, Real Users",
+    title: "Management",
+    subtitle: "Operations, Logistics & Event Execution",
     description:
-      "Members leave university with deployed web apps, open-source pull requests, and production code that interviewers actually ask about.",
-    tags: ["GitHub Repos", "Open Source", "Public Deploy"],
-    icon: <Terminal className="size-6 text-emerald-400" />,
+      "Drives the entire operational engine: stage coordination, venue logistics, scheduling, crowd management, and multi-team synchronization during flagship fests.",
+    tags: ["Event Ops", "Logistics", "Stage Direction", "Coordination"],
+    icon: <Users className="size-6 text-emerald-400" />,
   },
   {
     number: "04",
-    title: "Flagship Hackathons & Competitions",
-    subtitle: "Organize & Compete at Scale",
+    title: "Creativity",
+    subtitle: "UI/UX, Media & Visual Brand Identity",
     description:
-      "Lead and participate in Viveka 6.0, Smart India Hackathon campus prep, CTFs, and intra-college tech-culture expos.",
-    tags: ["Viveka 6.0", "SIH Prep", "CTF Gauntlets"],
-    icon: <Award className="size-6 text-cyan-400" />,
+      "Crafts compelling promotional posters, social media banners, event teasers, stage backdrops, motion graphics, and futuristic UI/UX designs that give TFC its identity.",
+    tags: ["UI/UX Design", "Graphic Design", "Motion Media", "Brand Identity"],
+    icon: <Palette className="size-6 text-accent" />,
   },
 ];
 
@@ -53,16 +53,10 @@ export function PillarsSection() {
   return (
     <div className="grid gap-6 sm:grid-cols-2">
       {pillars.map((p) => (
-        <GlowCard
-          key={p.number}
-          className="glass lift group rounded-2xl p-7 flex flex-col justify-between"
-        >
+        <GlowCard className="glass lift group rounded-2xl p-7 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between gap-4 mb-4">
               <div className="rounded-xl border border-border bg-surface-strong p-3">{p.icon}</div>
-              <span className="font-mono text-xs font-bold text-primary-glow/60">
-                PILLAR {p.number}
-              </span>
             </div>
 
             <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary-glow transition-colors">

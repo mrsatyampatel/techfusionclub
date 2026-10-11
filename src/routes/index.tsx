@@ -3,38 +3,32 @@ import { useState, useEffect } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
-  CalendarDays,
-  MapPin,
   Sparkles,
   Zap,
   Shield,
   Cpu,
   Code2,
   Terminal,
-  ExternalLink,
   Users,
   Trophy,
   GraduationCap,
   Lightbulb,
+  Target,
+  Rocket,
 } from "lucide-react";
-import { club, domains, stats, values, timeline } from "@/data/club";
-import { formatEventDate } from "@/data/events";
-import type { ClubEvent } from "@/data/events";
+import { club, values } from "@/data/club";
 import type { GalleryPhoto } from "@/data/gallery";
-import { getEvents, getGalleryPhotos } from "@/lib/db";
+import { getGalleryPhotos, getSiteSettings } from "@/lib/db";
 import { Reveal } from "@/components/site/Reveal";
 import { Section, SectionHeading } from "@/components/site/Section";
-import { StatCounter } from "@/components/site/StatCounter";
+import { WavyMarquee } from "@/components/site/WavyMarquee";
+import { StayAheadSection } from "@/components/site/StayAheadSection";
 import { CTABanner } from "@/components/site/CTABanner";
 import { GlowCard } from "@/components/site/GlowCard";
 import { PillarsSection } from "@/components/site/PillarsSection";
-import { ClubRoadmap } from "@/components/site/ClubRoadmap";
-import { MarqueeStrip } from "@/components/site/MarqueeStrip";
 import { FAQSection } from "@/components/site/FAQSection";
-import { TestimonialsSection } from "@/components/site/TestimonialsSection";
 import { UpcomingEventsGrid } from "@/components/site/UpcomingEventsGrid";
 import { VideoHero } from "@/components/site/VideoHero";
-import { DomainShowcase } from "@/components/site/DomainShowcase";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,7 +37,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Welcome to Tech Fusion Club (TFC) at SRMU! Join the most active student technical club for web development, hackathons, and Viveka fest. Founded by Praveen Singh (webdevpraveen).",
+          "Welcome to Tech Fusion Club (TFC) at SRMU! Join the most active student technical club for web development, hackathons, and Viveka fest.",
       },
       {
         name: "keywords",
@@ -71,15 +65,11 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const [previewPhotos, setPreviewPhotos] = useState<GalleryPhoto[]>([]);
-  const [featuredEvent, setFeaturedEvent] = useState<ClubEvent | null>(null);
+  const [showHomepageEvents, setShowHomepageEvents] = useState(true);
 
   useEffect(() => {
     getGalleryPhotos().then((data) => setPreviewPhotos(data.slice(0, 6)));
-    getEvents().then((events) => {
-      // Pick the first upcoming event, or the first event overall
-      const upcoming = events.find((e) => e.status === "upcoming");
-      setFeaturedEvent(upcoming || events[0] || null);
-    });
+    getSiteSettings().then((settings) => setShowHomepageEvents(settings.showHomepageEvents));
   }, []);
 
   return (
@@ -91,7 +81,7 @@ function Home() {
           <div className="animate-rise [animation-delay:0ms]">
             <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs uppercase tracking-widest text-primary-glow border border-primary/30">
               <Sparkles className="size-3.5" />
-              Est. {club.foundedYear} — {club.university}
+              {club.university}
             </span>
           </div>
 
@@ -121,128 +111,42 @@ function Home() {
         </div>
       </VideoHero>
 
-      {/* ═══════════════════ 3. MARQUEE TICKER ═══════════════════ */}
-      <div className="mt-12">
-        <MarqueeStrip
-          items={[
-            "Viveka 6.0 — Flagship Annual Tech Fest",
-            "320+ Active Members",
-            "6 Technical Domains",
-            "Weekly Build Nights",
-            "Smart India Hackathon (SIH) Prep",
-            "Open Source Contributions",
-            "1-on-1 Mentorship Program",
-            "Industry Guest Lectures",
-          ]}
-          speed={40}
-        />
+      {/* ═══════════════════ 3. WAVY RIBBON MARQUEE ═══════════════════ */}
+      <div className="-mt-6 sm:-mt-10 lg:-mt-14 mb-2 sm:mb-4 relative z-20">
+        <WavyMarquee speed={46} />
       </div>
 
-      {/* ═══════════════════ 4. STATS COUNTERS ═══════════════════ */}
-      <Section>
-        <Reveal>
-          <dl className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {stats.map((s) => (
-              <StatCounter
-                key={s.label}
-                value={s.value}
-                prefix={s.prefix}
-                suffix={s.suffix}
-                label={s.label}
-                className="text-center"
-              />
-            ))}
-          </dl>
-        </Reveal>
-      </Section>
+      {/* ═══════════════════ 4. STAY AHEAD HIGHLIGHT ═══════════════════ */}
+      <StayAheadSection />
 
-      {/* ═══════════════════ 5. FEATURED EVENT — Viveka Highlight ═══════════════════ */}
-      <Section>
-        <SectionHeading
-          eyebrow="Featured"
-          title="What's next on the calendar"
-          body="Our flagship fest and every workshop in between — all open to students from any department."
-          action={
-            <Link
-              to="/events"
-              className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
-            >
-              All events <ArrowRight className="size-4" />
-            </Link>
-          }
-        />
-
-        {featuredEvent && (
-          <Reveal className="glass-strong border-animated mt-12 grid overflow-hidden rounded-[2rem] lg:grid-cols-2">
-            <div className="relative min-h-[18rem] overflow-hidden bg-surface">
-              <img
-                src={featuredEvent.cover || "/images/events/default-cover.jpg"}
-                alt={featuredEvent.title || "Event"}
-                className="size-full object-cover opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent lg:bg-gradient-to-r" />
-            </div>
-            <div className="p-8 sm:p-12">
-              <span className="rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-                {featuredEvent.status === "upcoming"
-                  ? "Upcoming"
-                  : featuredEvent.category || "Event"}
-              </span>
-              <h3 className="mt-5 text-balance font-display text-2xl font-bold leading-snug sm:text-3xl">
-                {featuredEvent.title || "Featured Event"}
-              </h3>
-              <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-                {featuredEvent.summary || ""}
-              </p>
-              <ul className="mt-7 space-y-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CalendarDays className="size-3.5 text-primary-glow" />{" "}
-                  {formatEventDate(featuredEvent)}
-                </li>
-                <li className="flex items-center gap-2">
-                  <MapPin className="size-3.5 text-primary-glow" />{" "}
-                  {featuredEvent.venue || "Campus Venue"}
-                </li>
-              </ul>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Link
-                  to="/events"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform duration-300 hover:scale-[1.03]"
-                >
-                  Event details <ArrowRight className="size-4" />
-                </Link>
-                <a
-                  href="https://vivekatheintelligence.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
-                >
-                  Viveka 6.0 Site <ExternalLink className="size-3.5" />
-                </a>
-              </div>
-            </div>
-          </Reveal>
-        )}
-      </Section>
-
-      {/* ═══════════════════ 6. UPCOMING EVENTS GRID ═══════════════════ */}
-      <Section>
-        <SectionHeading
-          eyebrow="On the Horizon"
-          title="Upcoming events & competitions"
-          body="Hackathons, workshops, and tech-culture fests — all organized by students, for students."
-        />
-        <div className="mt-12">
-          <UpcomingEventsGrid />
-        </div>
-      </Section>
+      {/* ═══════════════════ 5. EVENTS & COMPETITIONS (ADMIN TOGGLEABLE) ═══════════════════ */}
+      {showHomepageEvents && (
+        <Section>
+          <SectionHeading
+            eyebrow="On the Horizon"
+            title="Upcoming events & competitions"
+            body="Hackathons, workshops, and tech-culture fests — all organized by students, for students."
+            action={
+              <Link
+                to="/events"
+                className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
+              >
+                All events <ArrowRight className="size-4" />
+              </Link>
+            }
+          />
+          <div className="mt-12">
+            <UpcomingEventsGrid />
+          </div>
+        </Section>
+      )}
 
       {/* ═══════════════════ 7. FOUR PILLARS ═══════════════════ */}
       <Section>
         <SectionHeading
           eyebrow="The Framework"
           title="Four Pillars of Tech Fusion Club"
-          body="How our technical collective operates week after week to produce industry-ready student engineers."
+          body="The four core teams that run, build, manage, and scale every operation across the club."
         />
         <div className="mt-12">
           <Reveal>
@@ -251,26 +155,94 @@ function Home() {
         </div>
       </Section>
 
-      {/* ═══════════════════ 8. MISSION & VISION ═══════════════════ */}
+      {/* ═══════════════════ MISSION & VISION (BENTO SHOWCASE) ═══════════════════ */}
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <Reveal>
-            <p className="eyebrow">Our mission</p>
-            <h2 className="mt-4 text-balance text-3xl font-bold leading-tight sm:text-4xl">
-              A club that measures itself in things shipped.
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="text-pretty text-lg leading-relaxed text-foreground/90">{club.mission}</p>
-            <p className="mt-5 text-pretty leading-relaxed text-muted-foreground">{club.vision}</p>
-            <Link
-              to="/about"
-              className="group mt-8 inline-flex items-center gap-2 font-semibold text-primary-glow"
-            >
-              Read the full story
-              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-          </Reveal>
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-border/80 bg-surface/60 dark:bg-card/40 p-8 sm:p-12 lg:p-16 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)]">
+          {/* Ambient Background Glow Elements */}
+          <div className="pointer-events-none absolute -top-32 -left-32 size-96 rounded-full bg-primary/20 blur-[100px]" />
+          <div className="pointer-events-none absolute -bottom-32 -right-32 size-96 rounded-full bg-accent/20 blur-[110px]" />
+          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[500px] rounded-full bg-primary/5 blur-[120px]" />
+
+          {/* Circuit Texture Overlay */}
+          <div className="pointer-events-none absolute inset-0 circuit-lines opacity-35 dark:opacity-20" />
+
+          {/* Faint Giant Watermark */}
+          <div className="pointer-events-none absolute -bottom-10 -right-6 select-none font-display text-[9rem] sm:text-[14rem] font-black tracking-tighter text-foreground/[0.03] dark:text-foreground/[0.02] leading-none">
+            TFC
+          </div>
+
+          <div className="relative z-10 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-16 items-center">
+            {/* Left Column: Heading & Key Badges */}
+            <Reveal>
+              <h2 className="text-balance font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-foreground">
+                A club that measures itself in{" "}
+                <span className="text-gradient">things shipped.</span>
+              </h2>
+
+              <p className="mt-5 text-pretty text-base text-muted-foreground leading-relaxed">
+                We believe that engineering is learned by shipping real code, building alongside
+                driven peers, and leading campus initiatives that create tangible impact.
+              </p>
+
+              {/* Quick Stat Pill Chips */}
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground backdrop-blur-md">
+                  <span className="size-1.5 rounded-full bg-primary-glow" />
+                  Founded 2019
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground backdrop-blur-md">
+                  <span className="size-1.5 rounded-full bg-emerald-400" />
+                  320+ Active Builders
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-background/60 px-3.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground backdrop-blur-md">
+                  <span className="size-1.5 rounded-full bg-cyan-400" />
+                  Student-Driven
+                </span>
+              </div>
+            </Reveal>
+
+            {/* Right Column: Cards for Mission & Vision + Read Full Story Button */}
+            <Reveal delay={100} className="space-y-5">
+              {/* Mission Card */}
+              <div className="rounded-2xl border border-border/70 bg-background/60 dark:bg-card/50 p-6 backdrop-blur-md border-l-4 border-l-primary shadow-sm transition-all duration-300 hover:border-border hover:bg-background/80">
+                <div className="flex items-center gap-2 mb-2 font-mono text-xs uppercase tracking-wider text-primary font-bold">
+                  <Target className="size-4" />
+                  <span>The Mission</span>
+                </div>
+                <p className="text-pretty text-sm sm:text-base leading-relaxed text-foreground/90 font-medium">
+                  {club.mission}
+                </p>
+              </div>
+
+              {/* Vision Card */}
+              <div className="rounded-2xl border border-border/70 bg-background/60 dark:bg-card/50 p-6 backdrop-blur-md border-l-4 border-l-accent shadow-sm transition-all duration-300 hover:border-border hover:bg-background/80">
+                <div className="flex items-center gap-2 mb-2 font-mono text-xs uppercase tracking-wider text-accent font-bold">
+                  <Rocket className="size-4" />
+                  <span>The Vision</span>
+                </div>
+                <p className="text-pretty text-sm sm:text-base leading-relaxed text-muted-foreground">
+                  {club.vision}
+                </p>
+              </div>
+
+              {/* CTA Action */}
+              <div className="pt-2 flex flex-wrap items-center gap-4">
+                <Link
+                  to="/about"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-sm text-primary-foreground shadow-[0_0_20px_rgba(217,72,15,0.3)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(217,72,15,0.45)]"
+                >
+                  Read the full story
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  to="/members"
+                  className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
+                >
+                  Meet the team
+                </Link>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </Section>
 
@@ -307,84 +279,7 @@ function Home() {
         </div>
       </Section>
 
-      {/* ═══════════════════ 11. MARQUEE REVERSE ═══════════════════ */}
-      <MarqueeStrip
-        items={[
-          "Web Development",
-          "AI / Machine Learning",
-          "Cybersecurity & CTF",
-          "App Development",
-          "Cloud & DevOps",
-          "UI/UX Design",
-          "Hackathons",
-          "Open Source",
-        ]}
-        speed={30}
-        reverse
-      />
-
-      {/* ═══════════════════ 12. CLUB ROADMAP ═══════════════════ */}
-      <Section>
-        <SectionHeading
-          eyebrow="The Lifecycle"
-          title="Your 1-Year Journey in Tech Fusion"
-          body="From a beginner joining day one to organizing campus hackathons and landing tech roles."
-          align="center"
-        />
-        <div className="mt-12">
-          <Reveal>
-            <ClubRoadmap />
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* ═══════════════════ 13. TESTIMONIALS ═══════════════════ */}
-      <Section>
-        <SectionHeading
-          eyebrow="What People Say"
-          title="Voices from the community"
-          body="Hear from the students and faculty who make Tech Fusion Club what it is."
-          align="center"
-        />
-        <div className="mt-12">
-          <TestimonialsSection />
-        </div>
-      </Section>
-
-      {/* ═══════════════════ 14. TIMELINE ═══════════════════ */}
-      <Section>
-        <SectionHeading
-          eyebrow="Since 2019"
-          title="Our journey so far"
-          body="From a handful of students in a CS lab to the university's most active technical community."
-          align="center"
-        />
-        <div className="mx-auto mt-12 max-w-3xl space-y-0">
-          {timeline.map((t, i) => (
-            <Reveal key={t.year} delay={i * 60}>
-              <div className="relative flex gap-6 pb-10 last:pb-0">
-                <div className="flex flex-col items-center">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-primary/50 bg-card font-mono text-xs font-bold text-primary-glow shadow-[0_0_12px_rgba(217,72,15,0.3)]">
-                    {t.year.slice(-2)}
-                  </div>
-                  {i < timeline.length - 1 && (
-                    <div className="mt-2 w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-transparent" />
-                  )}
-                </div>
-                <div className="pt-1.5">
-                  <p className="font-mono text-[11px] uppercase tracking-widest text-primary-glow">
-                    {t.year}
-                  </p>
-                  <h3 className="mt-1 font-display text-lg font-bold text-foreground">{t.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* ═══════════════════ 15. GALLERY STRIP ═══════════════════ */}
+      {/* ═══════════════════ GALLERY STRIP ═══════════════════ */}
       <Section>
         <SectionHeading
           eyebrow="From the floor"
@@ -394,7 +289,7 @@ function Home() {
               to="/gallery"
               className="glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors hover:text-primary-glow"
             >
-              Full gallery <ArrowRight className="size-4" />
+              View Gallery <ArrowRight className="size-4" />
             </Link>
           }
         />
