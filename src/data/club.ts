@@ -8,7 +8,7 @@ export const club = {
   shortName: "Tech Fusion",
   initials: "TF",
   tagline: "Where ideas fuse into technology.",
-  university: "Shri Ramswaroop Memorial University (SRMU)",
+  university: "Shri Ramswaroop Memorial University",
   foundedYear: 2019,
   email: "techfusionclub@srmu.ac.in",
   coordinatorEmail: "techfusionclub@srmu.ac.in",
@@ -22,8 +22,6 @@ export const club = {
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/techfusionclub_srmu/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/techfusion-club/" },
-    { label: "Facebook", href: "https://www.facebook.com/people/Techfusion-Club/100088111141332/" },
-    { label: "GitHub", href: "https://github.com/webdevpraveen/techfusionclub" },
   ],
   mission:
     "Tech Fusion Club exists to turn curiosity into shipped work. We give SRMU students a platform to learn in public, build with peers across engineering domains, and graduate with a portfolio of real production projects.",

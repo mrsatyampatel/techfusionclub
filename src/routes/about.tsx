@@ -23,7 +23,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Discover Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU). Founded by Praveen Singh (webdevpraveen), we host Viveka fest, hackathons, and coding events.",
+          "Discover Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University.  , we host Viveka fest, hackathons, and coding events.",
       },
       {
         name: "keywords",
@@ -34,14 +34,13 @@ export const Route = createFileRoute("/about")({
       {
         property: "og:description",
         content:
-          "Discover Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU). Founded by Praveen Singh (webdevpraveen), we host Viveka fest, hackathons, and coding events.",
+          "Discover Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University.  , we host Viveka fest, hackathons, and coding events.",
       },
       { property: "og:url", content: "https://techfusionclub.vercel.app/about" },
       { name: "twitter:title", content: "About Tech Fusion Club (TFC SRMU)" },
       {
         name: "twitter:description",
-        content:
-          "Discover Tech Fusion Club (TFC) at SRMU. Founded by Praveen Singh (webdevpraveen), we host Viveka fest and hackathons.",
+        content: "Discover Tech Fusion Club (TFC) at SRMU.  , we host Viveka fest and hackathons.",
       },
     ],
     links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/about" }],

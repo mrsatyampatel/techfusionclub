@@ -16,7 +16,7 @@ export const Route = createFileRoute("/members")({
       {
         name: "description",
         content:
-          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Faculty Coordinators, General Secretaries, and department heads driving Viveka fest and tech events. Founded by Praveen Singh (webdevpraveen).",
+          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Faculty Coordinators, General Secretaries, and department heads driving Viveka fest and tech events.",
       },
       {
         name: "keywords",
@@ -67,7 +67,7 @@ function Team() {
     return (
       <Section className="pb-8">
         <div className="flex h-[400px] items-center justify-center">
-          <p className="text-muted-foreground animate-pulse">Loading team...</p>
+          <p className="text-muted-foreground animate-pulse">Loading...</p>
         </div>
       </Section>
     );

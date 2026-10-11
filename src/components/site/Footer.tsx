@@ -41,64 +41,67 @@ export function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Footer quick links">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground">
-              Explore
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              {quickLinks.map((l) => (
-                <li key={"to" in l ? l.to : l.href}>
-                  {"external" in l && l.external ? (
-                    <a
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 transition-colors hover:text-primary-glow text-primary-glow font-semibold"
-                    >
-                      {l.label}
-                      <ExternalLink className="size-3" />
-                    </a>
-                  ) : (
-                    <Link
-                      to={"to" in l ? l.to : "/"}
-                      className="transition-colors hover:text-primary-glow"
-                    >
-                      {l.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Quick links & More side-by-side on mobile devices */}
+          <div className="grid grid-cols-2 gap-6 sm:gap-8 lg:contents">
+            <nav aria-label="Footer quick links">
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground">
+                Explore
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                {quickLinks.map((l) => (
+                  <li key={"to" in l ? l.to : l.href}>
+                    {"external" in l && l.external ? (
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 transition-colors hover:text-primary-glow text-primary-glow font-semibold"
+                      >
+                        {l.label}
+                        <ExternalLink className="size-3" />
+                      </a>
+                    ) : (
+                      <Link
+                        to={"to" in l ? l.to : "/"}
+                        className="transition-colors hover:text-primary-glow"
+                      >
+                        {l.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          <nav aria-label="Footer secondary links">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground">
-              More
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              {moreLinks.map((l) => (
-                <li key={"to" in l ? l.to : l.href}>
-                  {"external" in l && l.external ? (
-                    <a
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition-colors hover:text-primary-glow"
-                    >
-                      {l.label}
-                    </a>
-                  ) : (
-                    <Link
-                      to={"to" in l ? l.to : "/"}
-                      className="transition-colors hover:text-primary-glow"
-                    >
-                      {l.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+            <nav aria-label="Footer secondary links">
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground">
+                More
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                {moreLinks.map((l) => (
+                  <li key={"to" in l ? l.to : l.href}>
+                    {"external" in l && l.external ? (
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-primary-glow"
+                      >
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={"to" in l ? l.to : "/"}
+                        className="transition-colors hover:text-primary-glow"
+                      >
+                        {l.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
 
           <div>
             <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground">

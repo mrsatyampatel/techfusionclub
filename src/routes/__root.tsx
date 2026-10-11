@@ -81,7 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Tech Fusion Club (TFC) is the premier student-led technical club at SRMU. We organize Viveka, engineering hackathons, tech workshops, and coding events. Founded by Praveen Singh (webdevpraveen).",
+          "Tech Fusion Club (TFC) is the premier student-led technical club at SRMU. We organize Viveka, engineering hackathons, tech workshops, and coding events.",
       },
       {
         name: "keywords",
@@ -191,17 +191,12 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const routerState = useRouterState();
   const isAdministration = routerState.location.pathname.startsWith("/administration");
+  const isHome = routerState.location.pathname === "/";
 
   return (
     <QueryClientProvider client={queryClient}>
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"
-      >
-        Skip to content
-      </a>
       {!isAdministration && <Nav />}
-      <main id="main" className={!isAdministration ? "pt-16 sm:pt-20" : ""}>
+      <main id="main" className={!isAdministration && !isHome ? "pt-24 sm:pt-28" : ""}>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </main>

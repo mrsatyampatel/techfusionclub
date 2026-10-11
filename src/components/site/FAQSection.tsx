@@ -11,32 +11,17 @@ const faqs: FAQItem[] = [
   {
     question: "Who can join Tech Fusion Club?",
     answer:
-      "Any student enrolled at Shri Ramswaroop Memorial University (SRMU) — regardless of department, year, or prior coding experience. We run a beginner-friendly onboarding track every semester.",
+      "Any student enrolled at Shri Ramswaroop Memorial University — regardless of department, year, or prior coding experience. We run a beginner-friendly onboarding track every semester.",
   },
   {
     question: "Is there any membership fee?",
     answer:
-      "No. Tech Fusion Club is a university-recognized student body. There is no membership fee to join. Some flagship events (like Viveka) may have a nominal registration fee for external participants.",
-  },
-  {
-    question: "How often do events and workshops happen?",
-    answer:
-      "We host weekly build nights every Thursday, monthly domain-specific workshops, and 2–3 large-scale fests and hackathons per academic year — including our flagship Viveka tech fest.",
-  },
-  {
-    question: "What domains does the club cover?",
-    answer:
-      "Six active domains: Web Development, AI / ML, Cybersecurity, App Development, Cloud & DevOps, and UI/UX Design. Every new member picks a primary domain and gets a senior mentor inside it.",
-  },
-  {
-    question: "Can I switch domains after joining?",
-    answer:
-      "Absolutely. Cross-domain exploration is encouraged. Many of our strongest members have worked across 2–3 domains during their time in the club.",
+      "No. Tech Fusion Club is a university-recognized student body. There is no membership fee to join.",
   },
   {
     question: "What is Viveka?",
     answer:
-      "Viveka is the university's flagship annual technical festival organized entirely by Tech Fusion Club. It features a 36-hour hackathon, SIH internal prep, coding arenas, tech talks, project expos, and ₹1.5L+ in prizes.",
+      "Viveka is the university's flagship annual technical festival organized entirely by Tech Fusion Club. It features a hackathon, coding arena codex, tech talks, project expos, and many more events.",
   },
 ];
 
