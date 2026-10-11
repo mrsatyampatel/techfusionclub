@@ -56,5 +56,11 @@ service cloud.firestore {
     match /trash/{trashId} {
       allow read, write: if isAdmin();
     }
+
+    // Site settings collection (homepage feature toggles, etc.)
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
   }
 }

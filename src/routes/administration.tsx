@@ -48,6 +48,8 @@ import {
   getTrashItems,
   restoreTrashItem,
   deleteTrashItemPermanently,
+  getSiteSettings,
+  updateSiteSettings,
   type TrashItem,
 } from "@/lib/db";
 import type { ClubEvent } from "@/data/events";
@@ -372,17 +374,45 @@ function EventsAdmin() {
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingEvent, setEditingEvent] = useState<(ClubEvent & { id?: string }) | null>(null);
+  const [showHomepageEvents, setShowHomepageEvents] = useState(true);
+  const [togglingHomepageEvents, setTogglingHomepageEvents] = useState(false);
 
   const fetchEvents = async () => {
     setLoading(true);
-    const data = await getEvents(true);
-    setEvents(data);
-    setLoading(false);
+    try {
+      const [data, settings] = await Promise.all([getEvents(true), getSiteSettings()]);
+      setEvents(data);
+      setShowHomepageEvents(settings.showHomepageEvents);
+    } catch {
+      toast.error("Failed to load events or settings.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchEvents();
   }, []);
+
+  const handleToggleHomepageEvents = async () => {
+    const nextVal = !showHomepageEvents;
+    setShowHomepageEvents(nextVal);
+    setTogglingHomepageEvents(true);
+    try {
+      await updateSiteSettings({ showHomepageEvents: nextVal });
+      toast.success(
+        nextVal
+          ? "Homepage Events Section enabled (Now visible on homepage)"
+          : "Homepage Events Section disabled (Now hidden from homepage)",
+      );
+    } catch (err) {
+      console.error("Failed to toggle homepage events:", err);
+      setShowHomepageEvents(!nextVal);
+      toast.error("Failed to update homepage events setting. Please try again.");
+    } finally {
+      setTogglingHomepageEvents(false);
+    }
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this event? This cannot be undone.")) return;
@@ -414,6 +444,66 @@ function EventsAdmin() {
 
   return (
     <div className="space-y-6">
+      {/* Homepage Events Section Visibility Toggle */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-border/70 bg-surface/50 backdrop-blur-md shadow-sm">
+        <div className="flex items-center gap-3.5">
+          <div
+            className={`size-11 rounded-xl flex items-center justify-center transition-colors ${
+              showHomepageEvents
+                ? "bg-primary/15 text-primary border border-primary/30"
+                : "bg-muted text-muted-foreground border border-border/60"
+            }`}
+          >
+            <Calendar className="size-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h3 className="font-display font-bold text-base text-foreground">
+                Homepage Events Section
+              </h3>
+              <span
+                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[11px] font-semibold uppercase tracking-wider border ${
+                  showHomepageEvents
+                    ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30"
+                    : "bg-zinc-500/10 text-zinc-400 border-zinc-500/20"
+                }`}
+              >
+                <span
+                  className={`size-1.5 rounded-full ${
+                    showHomepageEvents ? "bg-emerald-500 animate-pulse" : "bg-zinc-500"
+                  }`}
+                />
+                {showHomepageEvents ? "VISIBLE ON HOMEPAGE" : "HIDDEN FROM HOMEPAGE"}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1 max-w-xl">
+              Toggle ON/OFF to control whether events appear on the homepage. The standalone /events
+              page remains active and unaffected.
+            </p>
+          </div>
+        </div>
+
+        {/* Toggle Switch */}
+        <button
+          type="button"
+          role="switch"
+          aria-checked={showHomepageEvents}
+          disabled={togglingHomepageEvents}
+          onClick={handleToggleHomepageEvents}
+          className={`relative inline-flex h-8 w-14 shrink-0 cursor-pointer items-center rounded-full p-1 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+            showHomepageEvents
+              ? "bg-primary shadow-[0_0_12px_rgba(217,72,15,0.4)]"
+              : "bg-muted-foreground/30"
+          } ${togglingHomepageEvents ? "opacity-60 cursor-wait" : ""}`}
+        >
+          <span
+            className={`pointer-events-none inline-block size-6 rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out ${
+              showHomepageEvents ? "translate-x-6" : "translate-x-0"
+            }`}
+          />
+        </button>
+      </div>
+
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />

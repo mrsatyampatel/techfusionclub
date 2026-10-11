@@ -30,6 +30,8 @@ const GALLERY_COLLECTION = "gallery";
 const ANNOUNCEMENTS_COLLECTION = "announcements";
 const REGISTRATIONS_COLLECTION = "registrations";
 const TRASH_COLLECTION = "trash";
+const SETTINGS_COLLECTION = "settings";
+const SITE_SETTINGS_DOC = "site";
 
 const ALLOWED_RESTORE_COLLECTIONS = new Set([
   EVENTS_COLLECTION,
@@ -668,4 +670,60 @@ export const createRegistration = async (data: Record<string, unknown>) => {
   });
   const docRef = await addDoc(collection(db, REGISTRATIONS_COLLECTION), sanitized);
   return docRef.id;
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+//  SITE SETTINGS (Feature toggles, homepage controls)
+// ═══════════════════════════════════════════════════════════════════════
+
+export interface SiteSettings {
+  showHomepageEvents: boolean;
+}
+
+export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  showHomepageEvents: true,
+};
+
+export const getSiteSettings = async (): Promise<SiteSettings> => {
+  const cacheKey = "site_settings";
+  const cached = getCached<SiteSettings>(cacheKey);
+  if (cached) return cached;
+
+  try {
+    const docRef = doc(db, SETTINGS_COLLECTION, SITE_SETTINGS_DOC);
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      const data = snap.data();
+      const settings: SiteSettings = {
+        showHomepageEvents:
+          typeof data["showHomepageEvents"] === "boolean"
+            ? Boolean(data["showHomepageEvents"])
+            : DEFAULT_SITE_SETTINGS.showHomepageEvents,
+      };
+      setCache(cacheKey, settings);
+      return settings;
+    }
+    setCache(cacheKey, DEFAULT_SITE_SETTINGS);
+    return DEFAULT_SITE_SETTINGS;
+  } catch (error) {
+    console.warn("Error fetching site settings from Firestore, using default:", error);
+    const stale = getCached<SiteSettings>(cacheKey, true);
+    if (stale) return stale;
+    return DEFAULT_SITE_SETTINGS;
+  }
+};
+
+export const updateSiteSettings = async (data: Partial<SiteSettings>): Promise<void> => {
+  const cacheKey = "site_settings";
+  const current = await getSiteSettings();
+  const updated: SiteSettings = {
+    ...current,
+    ...data,
+  };
+  const sanitized = sanitizeFirestoreData(updated);
+  const docRef = doc(db, SETTINGS_COLLECTION, SITE_SETTINGS_DOC);
+
+  await setDoc(docRef, sanitized, { merge: true });
+  clearCache(cacheKey);
+  setCache(cacheKey, updated);
 };
