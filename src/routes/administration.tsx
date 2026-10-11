@@ -2810,9 +2810,9 @@ function MemberAvatar({
   name,
   size = "md",
 }: {
-  photo?: string;
+  photo?: string | undefined;
   name: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | undefined;
 }) {
   const [error, setError] = useState(false);
   const sizeClasses = {
@@ -2843,7 +2843,7 @@ function MemberAvatar({
   );
 }
 
-function EventCoverThumbnail({ cover, title }: { cover?: string; title: string }) {
+function EventCoverThumbnail({ cover, title }: { cover?: string | undefined; title: string }) {
   const [error, setError] = useState(false);
   return (
     <div className="w-16 h-11 rounded-xl overflow-hidden bg-surface-strong border border-border shadow-sm shrink-0 flex items-center justify-center">
