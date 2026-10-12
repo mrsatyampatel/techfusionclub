@@ -26,39 +26,45 @@ import { StayAheadSection } from "@/components/site/StayAheadSection";
 import { CTABanner } from "@/components/site/CTABanner";
 import { GlowCard } from "@/components/site/GlowCard";
 import { PillarsSection } from "@/components/site/PillarsSection";
-import { FAQSection } from "@/components/site/FAQSection";
+import { FAQSection, homeFaqs } from "@/components/site/FAQSection";
 import { UpcomingEventsGrid } from "@/components/site/UpcomingEventsGrid";
 import { VideoHero } from "@/components/site/VideoHero";
+import { SEO_CONFIG, generateFaqSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tech Fusion Club (TFC SRMU) | Coding & Viveka Fest" },
+      { title: "Tech Fusion Club (TFC) SRMU | Premier Tech Club, Hackathons & Viveka Fest Lucknow" },
       {
         name: "description",
         content:
-          "Welcome to Tech Fusion Club (TFC) at SRMU! Join the most active student technical club for web development, hackathons, and Viveka fest.",
+          "Join Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow. Organizers of Viveka fest, engineering hackathons, web development bootcamps, and AI workshops. Founded by Praveen Singh (webdevpraveen).",
       },
       {
         name: "keywords",
-        content:
-          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, engineering club, tech community",
+        content: SEO_CONFIG.masterKeywords.join(", "),
       },
-      { property: "og:title", content: "Tech Fusion Club (TFC SRMU) | Viveka Fest & Coding" },
+      { property: "og:title", content: "Tech Fusion Club (TFC) SRMU | Coding, Hackathons & Viveka Fest Lucknow" },
       {
         property: "og:description",
         content:
-          "Welcome to Tech Fusion Club (TFC) at SRMU! Join the most active student technical club for web development, hackathons, and Viveka fest.",
+          "Official premier student-led technical club at Shri Ramswaroop Memorial University (SRMU), Lucknow. Viveka fest, hackathons, and workshops.",
       },
-      { name: "twitter:title", content: "Tech Fusion Club (TFC SRMU)" },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/` },
+      { name: "twitter:title", content: "Tech Fusion Club (TFC) SRMU | Technical Club" },
       {
         name: "twitter:description",
         content:
-          "Welcome to Tech Fusion Club (TFC) at SRMU! Join the most active student technical club for web development, hackathons, and Viveka fest.",
+          "Official student-led technical club at Shri Ramswaroop Memorial University (SRMU), Lucknow. Hackathons, workshops, and Viveka fest.",
       },
-      { property: "og:url", content: "/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(generateFaqSchema(homeFaqs)),
+      },
+    ],
   }),
   component: Home,
 });

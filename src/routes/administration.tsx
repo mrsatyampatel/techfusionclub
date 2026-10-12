@@ -77,7 +77,11 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/administration")({
   head: () => ({
-    meta: [{ title: "Executive Admin Console | Tech Fusion Club" }],
+    meta: [
+      { title: "Executive Admin Console | Tech Fusion Club" },
+      { name: "robots", content: "noindex, nofollow, noarchive, nosnippet" },
+      { name: "googlebot", content: "noindex, nofollow, noarchive, nosnippet" },
+    ],
   }),
   component: AdminShell,
 });

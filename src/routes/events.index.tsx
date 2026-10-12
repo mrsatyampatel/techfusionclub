@@ -8,36 +8,61 @@ import type { ClubEvent } from "@/data/events";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 import { CTABanner } from "@/components/site/CTABanner";
+import { SEO_CONFIG, generateBreadcrumbSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/events/")({
   head: () => ({
     meta: [
-      { title: "Events & Hackathons | Tech Fusion Club (TFC) SRMU" },
+      { title: "SRMU Events & Hackathons | Tech Fusion Club (TFC) Lucknow" },
       {
         name: "description",
         content:
-          "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU. Web development, AI/ML coding events hosted by Praveen Singh (webdevpraveen).",
+          "Official technical workshops, national hackathons, coding competitions, and Viveka fest by Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
       {
         name: "keywords",
         content:
-          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech events, hackathon srmu, coding workshops",
+          "SRMU EVENT, SRMU events, TFC SRMU events, Viveka SRMU, Viveka fest, Viveka The Intelligence, Ramswaroop Club events, SRMU hackathon, coding competitions lucknow, tech workshops SRMU, webdevpraveen",
       },
-      { property: "og:title", content: "Events & Hackathons | Tech Fusion Club SRMU" },
+      { property: "og:title", content: "SRMU Events, Hackathons & Viveka Fest | Tech Fusion Club" },
       {
         property: "og:description",
         content:
-          "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
+          "Join workshops, hackathons, and the Viveka fest by Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
-      { property: "og:url", content: "https://techfusionclub.vercel.app/events" },
-      { name: "twitter:title", content: "Tech Fusion Club (TFC) Events" },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/events` },
+      { name: "twitter:title", content: "SRMU Events & Hackathons | Tech Fusion Club (TFC)" },
       {
         name: "twitter:description",
         content:
-          "Join technical workshops, engineering hackathons, and Viveka fest by Tech Fusion Club (TFC) at SRMU.",
+          "Official tech events, engineering hackathons, and Viveka fest at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
     ],
-    links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/events" }],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/events` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          generateBreadcrumbSchema([{ name: "Events & Hackathons", path: "/events" }])
+        ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "SRMU Tech Events & Hackathons - Tech Fusion Club",
+          description:
+            "Directory of tech fests, coding hackathons, webinars, and hands-on workshops organized by Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU).",
+          url: `${SEO_CONFIG.siteUrl}/events`,
+          publisher: {
+            "@type": "Organization",
+            name: "Tech Fusion Club (TFC) SRMU",
+            url: SEO_CONFIG.siteUrl,
+          },
+        }),
+      },
+    ],
   }),
   component: Events,
 });

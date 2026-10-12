@@ -7,36 +7,56 @@ import { Section } from "@/components/site/Section";
 import { CTABanner } from "@/components/site/CTABanner";
 import { Github, Linkedin } from "lucide-react";
 import { GlowCard } from "@/components/site/GlowCard";
+import { SEO_CONFIG, generateBreadcrumbSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/alumni")({
   head: () => ({
     meta: [
-      { title: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
+      { title: "Alumni Network | Tech Fusion Club (TFC) Shri Ramswaroop Memorial University (SRMU)" },
       {
         name: "description",
         content:
-          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders, members, and tech professionals who built Viveka and the club's legacy alongside Praveen Singh (webdevpraveen).",
+          "Explore the alumni network of Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow. Past leaders and engineers working across global technology companies.",
       },
       {
         name: "keywords",
         content:
-          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc alumni, srmu alumni",
+          "Tech fusion club alumni, TFC SRMU alumni, SRMU engineering alumni, Shri Ramswaroop Memorial University graduates, Viveka founders, webdevpraveen, Praveen Singh SRMU",
       },
       { property: "og:title", content: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
       {
         property: "og:description",
         content:
-          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
+          "Explore the distinguished alumni network of Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
-      { property: "og:url", content: "https://techfusionclub.vercel.app/alumni" },
-      { name: "twitter:title", content: "Alumni | Tech Fusion Club SRMU" },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/alumni` },
+      { name: "twitter:title", content: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
       {
         name: "twitter:description",
         content:
-          "Explore the successful alumni network of Tech Fusion Club (TFC) at SRMU. Past leaders who built Viveka.",
+          "Distinguished alumni of Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
     ],
-    links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/alumni" }],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/alumni` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          generateBreadcrumbSchema([{ name: "Alumni Network", path: "/alumni" }])
+        ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Tech Fusion Club (TFC) SRMU Alumni Network",
+          description:
+            "Distinguished graduates and past leads of Tech Fusion Club at Shri Ramswaroop Memorial University.",
+          url: `${SEO_CONFIG.siteUrl}/alumni`,
+        }),
+      },
+    ],
   }),
   component: Alumni,
 });

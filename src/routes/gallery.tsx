@@ -6,34 +6,56 @@ import { Lightbox } from "@/components/site/Lightbox";
 import { FilterPill } from "@/components/site/EventCard";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
+import { SEO_CONFIG, generateBreadcrumbSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Event Gallery | Tech Fusion Club (TFC) SRMU" },
+      { title: "Event Gallery & Moments | Tech Fusion Club (TFC) SRMU Lucknow" },
       {
         name: "description",
         content:
-          "Photos from Tech Fusion Club (TFC) workshops, engineering hackathons, and the Viveka fest at SRMU. WebDevPraveen and the tech community in action.",
+          "Official photo gallery from Tech Fusion Club (TFC) workshops, Viveka tech fest, hackathons, and engineering seminars at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
       {
         name: "keywords",
         content:
-          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tfc gallery, srmu tech events",
+          "Tech fusion club photos, TFC SRMU gallery, Viveka fest photos, SRMU event images, tech fest Lucknow, webdevpraveen",
       },
-      { property: "og:title", content: "Event Gallery | Tech Fusion Club (TFC) SRMU" },
+      { property: "og:title", content: "Event Gallery & Moments | Tech Fusion Club (TFC) SRMU" },
       {
         property: "og:description",
-        content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest.",
+        content:
+          "Photos from Tech Fusion Club workshops, engineering hackathons, and Viveka fest at Shri Ramswaroop Memorial University (SRMU).",
       },
-      { property: "og:url", content: "https://techfusionclub.vercel.app/gallery" },
-      { name: "twitter:title", content: "Event Gallery | Tech Fusion Club SRMU" },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/gallery` },
+      { name: "twitter:title", content: "Event Gallery | Tech Fusion Club (TFC) SRMU" },
       {
         name: "twitter:description",
-        content: "Photos from Tech Fusion Club (TFC) workshops and the Viveka fest.",
+        content:
+          "Photos from Tech Fusion Club workshops and Viveka fest at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
     ],
-    links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/gallery" }],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/gallery` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          generateBreadcrumbSchema([{ name: "Event Gallery", path: "/gallery" }])
+        ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ImageGallery",
+          name: "Tech Fusion Club (TFC) SRMU Event Photo Gallery",
+          description:
+            "Photo archive of hackathons, workshops, coding bootcamps, and the annual Viveka fest at Shri Ramswaroop Memorial University.",
+          url: `${SEO_CONFIG.siteUrl}/gallery`,
+        }),
+      },
+    ],
   }),
   component: Gallery,
 });

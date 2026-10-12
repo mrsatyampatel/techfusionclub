@@ -3,10 +3,74 @@ import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 import { Mail, MapPin } from "lucide-react";
 import { club } from "@/data/club";
+import { SEO_CONFIG, generateBreadcrumbSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
-    meta: [{ title: "Contact | Tech Fusion Club (TFC) SRMU" }],
+    meta: [
+      { title: "Contact Tech Fusion Club (TFC) | SRMU Lucknow Campus" },
+      {
+        name: "description",
+        content:
+          "Contact Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Deva Road, Lucknow, Uttar Pradesh. Reach out for event inquiries, Viveka fest sponsorships, and tech partnerships.",
+      },
+      {
+        name: "keywords",
+        content:
+          "Contact TFC, Contact Tech Fusion Club, SRMU contact, Shri Ramswaroop Memorial University address, TFC email, Viveka sponsorship, SRMU clubs Lucknow, webdevpraveen",
+      },
+      { property: "og:title", content: "Contact Tech Fusion Club (TFC) | SRMU Lucknow" },
+      {
+        property: "og:description",
+        content:
+          "Reach out to Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU) for event partnerships, workshops, and Viveka fest.",
+      },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/contact` },
+      { name: "twitter:title", content: "Contact Tech Fusion Club (TFC) SRMU" },
+      {
+        name: "twitter:description",
+        content:
+          "Official contact channel for Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
+      },
+    ],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/contact` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          generateBreadcrumbSchema([{ name: "Contact", path: "/contact" }])
+        ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "Contact Tech Fusion Club (TFC) SRMU",
+          description:
+            "Get in touch with Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
+          url: `${SEO_CONFIG.siteUrl}/contact`,
+          mainEntity: {
+            "@type": "EducationalOrganization",
+            name: "Tech Fusion Club (TFC) SRMU",
+            email: SEO_CONFIG.email,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: SEO_CONFIG.university.address.streetAddress,
+              addressLocality: SEO_CONFIG.university.address.addressLocality,
+              addressRegion: SEO_CONFIG.university.address.addressRegion,
+              postalCode: SEO_CONFIG.university.address.postalCode,
+              addressCountry: "IN",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: SEO_CONFIG.university.geo.latitude,
+              longitude: SEO_CONFIG.university.geo.longitude,
+            },
+          },
+        }),
+      },
+    ],
   }),
   component: Contact,
 });

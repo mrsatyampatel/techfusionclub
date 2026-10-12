@@ -2,26 +2,41 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: string;
 }
 
-const faqs: FAQItem[] = [
+export const homeFaqs: FAQItem[] = [
   {
-    question: "Who can join Tech Fusion Club?",
+    question: "What is Tech Fusion Club (TFC) at SRMU?",
     answer:
-      "Any student enrolled at Shri Ramswaroop Memorial University — regardless of department, year, or prior coding experience. We run a beginner-friendly onboarding track every semester.",
+      "Tech Fusion Club (TFC) is the premier official student-led technical club at Shri Ramswaroop Memorial University (SRMU), Lucknow. Founded in 2019, TFC drives campus software culture, hands-on engineering, open source, and national hackathons.",
   },
   {
-    question: "Is there any membership fee?",
+    question: "Who can join Tech Fusion Club at Shri Ramswaroop Memorial University?",
     answer:
-      "No. Tech Fusion Club is a university-recognized student body. There is no membership fee to join.",
+      "Any student enrolled at Shri Ramswaroop Memorial University (SRMU) — regardless of engineering department, study year, or prior coding experience. We conduct beginner-friendly onboarding bootcamps every semester across Web Dev, AI/ML, App Dev, Cybersecurity, Cloud, and Design.",
   },
   {
-    question: "What is Viveka?",
+    question: "Is there any membership fee to join TFC SRMU?",
     answer:
-      "Viveka is the university's flagship annual technical festival organized entirely by Tech Fusion Club. It features a hackathon, coding arena codex, tech talks, project expos, and many more events.",
+      "No. Tech Fusion Club is a university-recognized student technical society under the Head Technical Society, SRMU. Membership and internal learning bootcamps are completely free for all students.",
+  },
+  {
+    question: "What is Viveka (The Intelligence) fest at SRMU?",
+    answer:
+      "Viveka is the university's flagship annual national technical festival organized entirely by Tech Fusion Club. It features 36-hour hackathons, algorithmic coding battles, AI project exhibitions, robotics arenas, and technical workshops with industry mentors.",
+  },
+  {
+    question: "Where is Tech Fusion Club and SRMU located?",
+    answer:
+      "Tech Fusion Club operates at Shri Ramswaroop Memorial University (SRMU), situated on Deva Road, Lucknow / Barabanki, Uttar Pradesh 225003. Coding meetups and labs take place in the CS engineering building and central computer facilities.",
+  },
+  {
+    question: "How does TFC help students with internships and engineering careers?",
+    answer:
+      "TFC emphasizes shipping real production software, contributing to open source, and building collaborative teamwork experience. Club alumni work as software engineers, cloud architects, and developers across top tech firms.",
   },
 ];
 
@@ -30,7 +45,7 @@ export function FAQSection() {
 
   return (
     <div className="mx-auto max-w-3xl divide-y divide-border/60">
-      {faqs.map((faq, i) => {
+      {homeFaqs.map((faq, i) => {
         const isOpen = openIndex === i;
         return (
           <div key={i}>

@@ -8,36 +8,56 @@ import { MemberCard } from "@/components/site/MemberCard";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 import { CTABanner } from "@/components/site/CTABanner";
+import { SEO_CONFIG, generateBreadcrumbSchema } from "@/data/seo";
 
 export const Route = createFileRoute("/members")({
   head: () => ({
     meta: [
-      { title: "Members | Tech Fusion Club (TFC) SRMU" },
+      { title: "Core Team & Leadership | Tech Fusion Club (TFC) SRMU Lucknow" },
       {
         name: "description",
         content:
-          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Faculty Coordinators, General Secretaries, and department heads driving Viveka fest and tech events.",
+          "Meet the student leaders, executive council, and faculty advisory board of Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
       {
         name: "keywords",
         content:
-          "Tech fusion club, tfc srmu, viveka, srmu, club, webdevpraveen, praveen singh srmu, tech fusion team, coding club leaders",
+          "Tech fusion club team, TFC SRMU members, SRMU club leads, tech fusion council, Er. Abhishek Kumar Saxena, Praveen Singh SRMU, webdevpraveen, student technical committee Lucknow",
       },
-      { property: "og:title", content: "Core Team | Tech Fusion Club (TFC) SRMU" },
+      { property: "og:title", content: "Core Team & Leadership | Tech Fusion Club (TFC) SRMU" },
       {
         property: "og:description",
         content:
-          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
+          "Meet the core student leaders and faculty coordinators of Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
-      { property: "og:url", content: "https://techfusionclub.vercel.app/team" },
-      { name: "twitter:title", content: "Team | Tech Fusion Club (TFC SRMU)" },
+      { property: "og:url", content: `${SEO_CONFIG.siteUrl}/members` },
+      { name: "twitter:title", content: "Core Team | Tech Fusion Club (TFC) SRMU" },
       {
         name: "twitter:description",
         content:
-          "Meet the core team of Tech Fusion Club (TFC) at SRMU. Driving Viveka fest and tech events.",
+          "Student leaders and executive council of Tech Fusion Club at Shri Ramswaroop Memorial University (SRMU), Lucknow.",
       },
     ],
-    links: [{ rel: "canonical", href: "https://techfusionclub.vercel.app/team" }],
+    links: [{ rel: "canonical", href: `${SEO_CONFIG.siteUrl}/members` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          generateBreadcrumbSchema([{ name: "Core Team & Council", path: "/members" }])
+        ),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Tech Fusion Club (TFC) SRMU Core Team",
+          description:
+            "Student council, domain leads, and faculty coordinators running Tech Fusion Club at Shri Ramswaroop Memorial University.",
+          url: `${SEO_CONFIG.siteUrl}/members`,
+        }),
+      },
+    ],
   }),
   component: Team,
 });
