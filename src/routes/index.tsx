@@ -87,7 +87,7 @@ function HeroHeadline() {
 
   // Intro typewriter: streams full sentence immediately on load
   useEffect(() => {
-    if (phase !== "intro") return;
+    if (phase !== "intro") return undefined;
 
     if (introProgress < 32) {
       const delay = introProgress < 12 ? 38 : introProgress < 16 ? 55 : 38;
@@ -98,11 +98,12 @@ function HeroHeadline() {
     }
 
     setPhase("pause");
+    return undefined;
   }, [phase, introProgress]);
 
   // Pause after intro completes before starting word rotation
   useEffect(() => {
-    if (phase !== "pause") return;
+    if (phase !== "pause") return undefined;
 
     const t = setTimeout(() => {
       setPhase("rotating");
@@ -114,7 +115,7 @@ function HeroHeadline() {
 
   // Word rotation: rotates fuse -> innovate -> build -> fuse, then stops
   useEffect(() => {
-    if (phase !== "rotating") return;
+    if (phase !== "rotating") return undefined;
 
     const target = ROTATING_WORDS[wordIdx] ?? "fuse";
     const isLast = wordIdx === ROTATING_WORDS.length - 1;
@@ -130,7 +131,7 @@ function HeroHeadline() {
     if (!isDeleting && word === target) {
       if (isLast) {
         setPhase("done");
-        return;
+        return undefined;
       }
       const t = setTimeout(() => {
         setIsDeleting(true);
