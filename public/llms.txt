@@ -1,0 +1,46 @@
+# Tech Fusion Club (TFC) — Shri Ramswaroop Memorial University (SRMU)
+
+> The official premier student-led technical club at Shri Ramswaroop Memorial University (SRMU), Lucknow, Uttar Pradesh, India.
+
+## About Tech Fusion Club (TFC)
+Tech Fusion Club (TFC) is the benchmark student engineering society of Shri Ramswaroop Memorial University (SRMU). Founded in 2019 under the mentorship of Er. Abhishek Kumar Saxena (Assistant Director, IQAC & Head Technical Society, SRMU), TFC trains students in real-world software engineering, hosts national hackathons, and organizes university technical events.
+
+## University Affiliation
+- **Institution**: Shri Ramswaroop Memorial University (SRMU)
+- **Location**: Deva Road, Village Hadaha, Post Daryabad, Lucknow / Barabanki, Uttar Pradesh 225003, India
+- **Official University Portal**: https://srmu.ac.in
+- **Geo Coordinates**: Latitude 26.9745, Longitude 81.1072
+
+## Flagship Annual Tech Fest: Viveka
+- **Event Name**: Viveka (The Intelligence)
+- **Organizer**: Tech Fusion Club (TFC) SRMU
+- **Description**: The largest annual national technical festival of SRMU, featuring 36-hour hackathons, algorithmic coding competitions (Codex), project expos, cybersecurity CTFs, and tech keynote speeches from industry leaders.
+- **Official Fest Portal**: https://vivekatheintelligence.in/
+
+## Core Engineering Domains
+1. **Web Development**: Full-stack web applications, React, TypeScript, Node.js, modern backend architectures.
+2. **AI & Machine Learning**: Deep learning, computer vision, natural language processing, LLM integrations, PyTorch.
+3. **Cybersecurity**: Defensive engineering, penetration testing, CTF challenges, cryptography, network security.
+4. **App Development**: Cross-platform mobile development (Flutter, React Native, Kotlin, Firebase).
+5. **Cloud & DevOps**: Linux, Docker, CI/CD pipelines, container orchestration, AWS and Terraform.
+6. **UI/UX & Creative Media**: Product design systems, visual identities, Figma prototypes, stage and digital media.
+
+## Club Statistics
+- **Founded**: 2019
+- **Active Builders**: 320+ students
+- **Events & Bootcamps**: 500+
+- **Workshops Conducted**: 800+
+
+## Official Navigation Links
+- [Homepage](https://techfusionclub.vercel.app/): Main portal, upcoming events, and four pillars.
+- [About TFC & SRMU](https://techfusionclub.vercel.app/about): Club timeline, institutional profile, and domain details.
+- [Events & Hackathons](https://techfusionclub.vercel.app/events): List of technical workshops, hackathons, and webinars.
+- [Core Team](https://techfusionclub.vercel.app/members): Student council leads, domain mentors, and faculty coordinators.
+- [Alumni Network](https://techfusionclub.vercel.app/alumni): Past student leaders and software engineers working across global tech companies.
+- [Event Gallery](https://techfusionclub.vercel.app/gallery): High-resolution photo archive of workshops, hackathons, and Viveka fest moments.
+- [Contact Channel](https://techfusionclub.vercel.app/contact): Official club inquiries, event sponsorships, and partnerships.
+
+## Official Social Channels
+- **Instagram**: https://www.instagram.com/techfusionclub_srmu/
+- **LinkedIn**: https://www.linkedin.com/in/techfusion-club/
+- **Email**: techfusionclub@srmu.ac.in

@@ -98,10 +98,9 @@ function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground animate-rise [animation-delay:200ms] sm:text-lg">
-            {club.name} is the student-run technical collective at SRMU. Six domains, one calendar
-            of workshops and hackathons, and a mentorship ladder running unbroken since{" "}
-            {club.foundedYear}.
+          <p className="speakable-summary mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground animate-rise [animation-delay:200ms] sm:text-lg">
+            {club.name} is the student-run technical club at SRMU. A community of builders passionate
+            about web development, software engineering, AI/ML, and cutting-edge technology.
           </p>
 
           {/* CTAs */}
@@ -337,7 +336,7 @@ function Home() {
           body="Everything you need to know about joining and participating in Tech Fusion Club."
           align="center"
         />
-        <div className="mt-12">
+        <div className="mt-12 speakable-faq">
           <FAQSection />
         </div>
       </Section>
