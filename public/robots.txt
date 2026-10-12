@@ -2,4 +2,38 @@ User-agent: *
 Disallow: /administration
 Allow: /
 
+# Dedicated Search & Generative AI Crawler Rules (AEO & GEO)
+User-agent: Googlebot
+Allow: /
+Disallow: /administration
+
+User-agent: Bingbot
+Allow: /
+Disallow: /administration
+
+User-agent: Applebot
+Allow: /
+Disallow: /administration
+
+User-agent: GPTBot
+Allow: /
+Disallow: /administration
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /administration
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /administration
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /administration
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /administration
+
 Sitemap: https://techfusionclub.vercel.app/sitemap.xml
+Host: https://techfusionclub.vercel.app
