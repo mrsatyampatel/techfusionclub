@@ -21,7 +21,7 @@ export const Route = createFileRoute("/alumni")({
       {
         name: "keywords",
         content:
-          "Tech fusion club alumni, TFC SRMU alumni, SRMU engineering alumni, Shri Ramswaroop Memorial University graduates, Viveka founders, webdevpraveen, Praveen Singh SRMU",
+          "Tech fusion club alumni, TFC SRMU alumni, SRMU engineering alumni, Shri Ramswaroop Memorial University graduates, past tech fusion leads, software engineers Lucknow",
       },
       { property: "og:title", content: "Alumni Network | Tech Fusion Club (TFC) SRMU" },
       {

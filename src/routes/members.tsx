@@ -22,7 +22,7 @@ export const Route = createFileRoute("/members")({
       {
         name: "keywords",
         content:
-          "Tech fusion club team, TFC SRMU members, SRMU club leads, tech fusion council, Er. Abhishek Kumar Saxena, Praveen Singh SRMU, webdevpraveen, student technical committee Lucknow",
+          "Tech fusion club team, TFC SRMU members, SRMU club leads, tech fusion council, Er. Abhishek Kumar Saxena, student technical committee Lucknow, SRMU engineering heads",
       },
       { property: "og:title", content: "Core Team & Leadership | Tech Fusion Club (TFC) SRMU" },
       {

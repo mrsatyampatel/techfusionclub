@@ -22,7 +22,7 @@ export const Route = createFileRoute("/events/")({
       {
         name: "keywords",
         content:
-          "SRMU EVENT, SRMU events, TFC SRMU events, Viveka SRMU, Viveka fest, Viveka The Intelligence, Ramswaroop Club events, SRMU hackathon, coding competitions lucknow, tech workshops SRMU, webdevpraveen",
+          "SRMU EVENT, SRMU events, TFC SRMU events, Viveka SRMU, Viveka fest, Viveka The Intelligence, Ramswaroop Club events, SRMU hackathon, coding competitions lucknow, tech workshops SRMU, Lucknow university events",
       },
       { property: "og:title", content: "SRMU Events, Hackathons & Viveka Fest | Tech Fusion Club" },
       {

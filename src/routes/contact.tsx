@@ -17,7 +17,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "keywords",
         content:
-          "Contact TFC, Contact Tech Fusion Club, SRMU contact, Shri Ramswaroop Memorial University address, TFC email, Viveka sponsorship, SRMU clubs Lucknow, webdevpraveen",
+          "Contact TFC, Contact Tech Fusion Club, SRMU contact, Shri Ramswaroop Memorial University address, TFC email, Viveka sponsorship, SRMU clubs Lucknow",
       },
       { property: "og:title", content: "Contact Tech Fusion Club (TFC) | SRMU Lucknow" },
       {

@@ -38,7 +38,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Join Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow. Organizers of Viveka fest, engineering hackathons, web development bootcamps, and AI workshops. Founded by Praveen Singh (webdevpraveen).",
+          "Join Tech Fusion Club (TFC) at Shri Ramswaroop Memorial University (SRMU), Lucknow. Organizers of Viveka fest, engineering hackathons, web development bootcamps, and AI workshops for students.",
       },
       {
         name: "keywords",

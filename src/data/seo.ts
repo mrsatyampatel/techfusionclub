@@ -1,6 +1,6 @@
 /**
  * Unified SEO, AEO (Answer Engine Optimization), and GEO (Generative & Geo-Local SEO) Engine
- * Targets dominance for SRMU, TFC, Tech Fusion Club, Viveka, Lucknow University/Colleges, and WebDevPraveen.
+ * Targets dominance for SRMU, TFC, Tech Fusion Club, Viveka, and Lucknow University/Colleges.
  */
 
 export const SEO_CONFIG = {
@@ -11,15 +11,6 @@ export const SEO_CONFIG = {
   logoUrl: "https://techfusionclub.vercel.app/images/branding/techfusionlogo.webp",
   logoLightSm: "https://techfusionclub.vercel.app/images/branding/techfusionlogolight-sm.webp",
   email: "techfusionclub@srmu.ac.in",
-  founder: {
-    name: "Praveen Singh",
-    alternateName: "webdevpraveen",
-    url: "https://github.com/webdevpraveen",
-    sameAs: [
-      "https://github.com/webdevpraveen",
-      "https://www.linkedin.com/in/webdevpraveen",
-    ],
-  },
   facultyAdvisor: {
     name: "Er. Abhishek Kumar Saxena",
     designation: "Assistant Director, IQAC & Head Technical Society, SRMU",
@@ -45,7 +36,6 @@ export const SEO_CONFIG = {
   socials: {
     instagram: "https://www.instagram.com/techfusionclub_srmu/",
     linkedin: "https://www.linkedin.com/in/techfusion-club/",
-    github: "https://github.com/webdevpraveen",
   },
   masterKeywords: [
     // Direct University & Club Queries
@@ -69,6 +59,10 @@ export const SEO_CONFIG = {
     "SRMU technical club",
     "Tech Fusion Club SRMU",
     "Shri Ramswaroop Memorial University tech club",
+    "SRMU CS club",
+    "SRMU coding club",
+    "SRMU student council",
+    "SRMU technical society",
     // Flagship Fest & Events
     "Viveka",
     "Viveka SRMU",
@@ -78,11 +72,9 @@ export const SEO_CONFIG = {
     "SRMU coding competition",
     "SRMU tech fest 2026",
     "SRMU national tech fest",
-    // Key People & Leadership
-    "webdevpraveen",
-    "Praveen Singh SRMU",
-    "Praveen Singh webdevpraveen",
+    // Leadership & Coordination
     "Er. Abhishek Kumar Saxena SRMU",
+    "Head Technical Society SRMU",
     // Geo-Local & Domain Searches
     "coding club lucknow",
     "technical clubs in lucknow colleges",
@@ -92,7 +84,7 @@ export const SEO_CONFIG = {
     "AI ML club SRMU",
     "student developer community SRMU",
   ],
-} as const ;
+} as const;
 
 /**
  * Universal Geo Metadata Tags for Local SEO & Generative AI location resolution
@@ -105,7 +97,7 @@ export const GEO_META_TAGS = [
   { name: "city", content: "Lucknow" },
   { name: "country", content: "India" },
   { name: "DC.title", content: "Tech Fusion Club (TFC) | Shri Ramswaroop Memorial University (SRMU)" },
-  { name: "DC.creator", content: "Praveen Singh (webdevpraveen)" },
+  { name: "DC.creator", content: "Tech Fusion Club (TFC) SRMU" },
   { name: "DC.publisher", content: "Tech Fusion Club SRMU" },
   { name: "DC.language", content: "en-IN" },
 ] as const;
@@ -178,18 +170,6 @@ export function generateGlobalSchema() {
         parentOrganization: {
           "@id": `${SEO_CONFIG.university.url}#university`,
         },
-        founder: {
-          "@type": "Person",
-          name: SEO_CONFIG.founder.name,
-          alternateName: SEO_CONFIG.founder.alternateName,
-          url: SEO_CONFIG.founder.url,
-          sameAs: SEO_CONFIG.founder.sameAs,
-        },
-        alumni: {
-          "@type": "Person",
-          name: SEO_CONFIG.founder.name,
-          alternateName: SEO_CONFIG.founder.alternateName,
-        },
         employee: [
           {
             "@type": "Person",
@@ -215,7 +195,6 @@ export function generateGlobalSchema() {
         sameAs: [
           SEO_CONFIG.socials.instagram,
           SEO_CONFIG.socials.linkedin,
-          SEO_CONFIG.socials.github,
         ],
         keywords: SEO_CONFIG.masterKeywords.join(", "),
       },

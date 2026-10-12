@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "keywords",
         content: SEO_CONFIG.masterKeywords.join(", "),
       },
-      { name: "author", content: "Praveen Singh (webdevpraveen), Tech Fusion Club SRMU" },
+      { name: "author", content: "Tech Fusion Club (TFC) SRMU" },
       { name: "publisher", content: "Tech Fusion Club (TFC) SRMU" },
       {
         name: "robots",
@@ -125,7 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // Twitter Card
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@techfusionclub" },
-      { name: "twitter:creator", content: "@webdevpraveen" },
+      { name: "twitter:creator", content: "@techfusionclub" },
       { name: "twitter:title", content: "Tech Fusion Club (TFC) SRMU | Technical Club & Hackathons" },
       {
         name: "twitter:description",

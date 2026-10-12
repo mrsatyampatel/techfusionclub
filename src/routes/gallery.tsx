@@ -20,7 +20,7 @@ export const Route = createFileRoute("/gallery")({
       {
         name: "keywords",
         content:
-          "Tech fusion club photos, TFC SRMU gallery, Viveka fest photos, SRMU event images, tech fest Lucknow, webdevpraveen",
+          "Tech fusion club photos, TFC SRMU gallery, Viveka fest photos, SRMU event images, tech fest Lucknow, coding workshops images",
       },
       { property: "og:title", content: "Event Gallery & Moments | Tech Fusion Club (TFC) SRMU" },
       {

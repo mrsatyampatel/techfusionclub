@@ -29,7 +29,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "keywords",
         content:
-          "About Tech Fusion Club, TFC SRMU, Shri Ramswaroop Memorial University tech club, SRMU Lucknow, CLUB SRMU, Ramswaroop Club, Viveka SRMU, Er. Abhishek Kumar Saxena, Praveen Singh SRMU, webdevpraveen, Lucknow college clubs",
+          "About Tech Fusion Club, TFC SRMU, Shri Ramswaroop Memorial University tech club, SRMU Lucknow, CLUB SRMU, Ramswaroop Club, Viveka SRMU, Er. Abhishek Kumar Saxena, Lucknow college clubs, student technical society",
       },
       { property: "og:title", content: "About Tech Fusion Club (TFC) | SRMU Lucknow Technical Club" },
       {
